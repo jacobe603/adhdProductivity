@@ -1,0 +1,368 @@
+/* Integrated Check-In Component Styles */
+
+.integrated-checkin {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkin-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.checkin-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+}
+
+/* Follow-up notice */
+.checkin-followup-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #eff6ff;
+  border: 2px solid #93c5fd;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #1e40af;
+  font-weight: 500;
+}
+
+.followup-icon {
+  font-size: 1.125rem;
+}
+
+/* Sections */
+.checkin-section {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.checkin-section:last-of-type {
+  border-bottom: none;
+}
+
+.checkin-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkin-optional {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Energy Display */
+.checkin-energy-display {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.checkin-emoji {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.checkin-energy-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.checkin-energy-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.checkin-energy-number {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+/* Energy change indicator */
+.energy-change {
+  font-size: 1.125rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.energy-up {
+  color: #10b981;
+  background: #ecfdf5;
+}
+
+.energy-down {
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+.energy-same {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+/* Slider */
+.checkin-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(to right,
+    #dc2626 0%, #ea580c 11%, #f59e0b 22%, #fbbf24 33%,
+    #fcd34d 44%, #a3e635 55%, #84cc16 66%, #4ade80 77%,
+    #22c55e 88%, #10b981 100%);
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.checkin-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border: 3px solid #1f2937;
+}
+
+.checkin-slider::-moz-range-thumb {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border: 3px solid #1f2937;
+}
+
+/* Quick markers */
+.checkin-quick-markers {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.quick-marker {
+  background: none;
+  border: 2px solid transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  opacity: 0.4;
+  transition: all 0.2s ease;
+}
+
+.quick-marker:hover {
+  opacity: 0.8;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.quick-marker.active {
+  opacity: 1;
+  background: rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+}
+
+/* Interventions Grid */
+.checkin-interventions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.intervention-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0.75rem;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.intervention-chip:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.intervention-chip.active {
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
+
+.intervention-chip-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.intervention-chip-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.2;
+}
+
+.intervention-chip.active .intervention-chip-name {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.selected-count {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #10b981;
+  font-weight: 600;
+  padding: 0.5rem;
+  background: #ecfdf5;
+  border-radius: 8px;
+}
+
+/* Notes */
+.checkin-notes-toggle {
+  width: 100%;
+  padding: 1rem;
+  background: none;
+  border: 2px dashed #d1d5db;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkin-notes-toggle:hover {
+  border-color: #9ca3af;
+  background: #f9fafb;
+  color: #374151;
+}
+
+.checkin-notes-input {
+  position: relative;
+}
+
+.checkin-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.2s ease;
+}
+
+.checkin-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.checkin-textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* Submit Button */
+.checkin-submit {
+  width: 100%;
+  padding: 1.25rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  background: #10b981;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.checkin-submit:hover:not(:disabled) {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.checkin-submit:disabled {
+  background: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.checkin-hint {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .integrated-checkin {
+    padding: 1.5rem;
+  }
+
+  .checkin-energy-display {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .checkin-emoji {
+    font-size: 3rem;
+  }
+
+  .checkin-interventions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .intervention-chip {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .intervention-chip-icon {
+    font-size: 1.5rem;
+  }
+
+  .intervention-chip-name {
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,68 @@
+/* Energy Chart Component Styles */
+
+.energy-chart {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.energy-chart__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.energy-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.energy-chart__canvas {
+  display: block;
+  width: 100%;
+}
+
+.energy-chart__note {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0.5rem 0 0 0;
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .energy-chart {
+    padding: 1rem;
+  }
+
+  .energy-chart__legend {
+    gap: 0.5rem;
+  }
+
+  .legend-item {
+    font-size: 0.625rem;
+  }
+}

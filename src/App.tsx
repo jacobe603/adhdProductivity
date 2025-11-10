@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
-import { EnergyTracker } from './components/energy/EnergyTracker';
-import { InterventionTracker } from './components/interventions/InterventionTracker';
 import { IfThenPlanner } from './components/intentions/IfThenPlanner';
 import { TaskManager } from './components/tasks/TaskManager';
 import { CelebrationAnimation } from './components/tasks/CelebrationAnimation';
+import { IntegratedCheckIn, CheckInData } from './components/checkin/IntegratedCheckIn';
+import { AnalyticsView } from './components/analytics/AnalyticsView';
 import { db } from './db/database';
 import { getTimeOfDay } from './utils/timeUtils';
-import { EnergyLevel, IfThenPlan, Task, TaskPriority } from './types';
+import { IfThenPlan, Task, TaskPriority, CheckInEntry } from './types';
 import './App.css';
 
-type View = 'tasks' | 'energy' | 'interventions' | 'plans';
+type View = 'tasks' | 'checkin' | 'analytics' | 'plans';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('tasks');
   const [dbReady, setDbReady] = useState(false);
   const [plans, setPlans] = useState<IfThenPlan[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [lastCheckIn, setLastCheckIn] = useState<CheckInEntry | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
 
@@ -56,43 +57,40 @@ function App() {
     }
   };
 
-  const handleEnergySave = async (energyLevel: EnergyLevel, notes?: string) => {
-    try {
-      await db.saveEnergyEntry({
-        timestamp: new Date(),
-        energyLevel,
-        notes,
-        timeOfDay: getTimeOfDay(),
-      });
+  // Load last check-in
+  useEffect(() => {
+    if (dbReady) {
+      loadLastCheckIn();
+    }
+  }, [dbReady]);
 
-      showSuccessMessage();
-      console.log('Energy entry saved:', energyLevel);
+  const loadLastCheckIn = async () => {
+    try {
+      const checkIns = await db.getCheckIns(1); // Get most recent
+      if (checkIns.length > 0) {
+        setLastCheckIn(checkIns[0]);
+      }
     } catch (error) {
-      console.error('Failed to save energy entry:', error);
+      console.error('Failed to load last check-in:', error);
     }
   };
 
-  const handleInterventionsSave = async (selectedInterventions: string[]) => {
+  // Handle integrated check-in
+  const handleCheckInSubmit = async (data: CheckInData) => {
     try {
-      const timestamp = new Date();
+      await db.saveCheckIn({
+        timestamp: new Date(),
+        energyLevel: data.energyLevel,
+        activeInterventions: data.activeInterventions,
+        notes: data.notes,
+        tasksCompleted: 0, // Could integrate with task count
+        timeOfDay: getTimeOfDay(),
+      });
 
-      // Save each intervention log
-      for (const interventionId of selectedInterventions) {
-        // Get current energy level (simplified - in real app would track this)
-        const energyLevel = 5 as EnergyLevel;
-
-        await db.saveInterventionLog({
-          timestamp,
-          interventionId,
-          interventionName: interventionId, // In real app, look up name
-          contextBefore: { energyLevel },
-        });
-      }
-
+      await loadLastCheckIn();
       showSuccessMessage();
-      console.log('Interventions saved:', selectedInterventions);
     } catch (error) {
-      console.error('Failed to save interventions:', error);
+      console.error('Failed to save check-in:', error);
     }
   };
 
@@ -191,18 +189,18 @@ function App() {
           <span>Tasks</span>
         </button>
         <button
-          className={`app-nav__button ${currentView === 'energy' ? 'active' : ''}`}
-          onClick={() => setCurrentView('energy')}
+          className={`app-nav__button ${currentView === 'checkin' ? 'active' : ''}`}
+          onClick={() => setCurrentView('checkin')}
         >
-          <span className="app-nav__icon">⚡</span>
-          <span>Energy</span>
+          <span className="app-nav__icon">📊</span>
+          <span>Check-In</span>
         </button>
         <button
-          className={`app-nav__button ${currentView === 'interventions' ? 'active' : ''}`}
-          onClick={() => setCurrentView('interventions')}
+          className={`app-nav__button ${currentView === 'analytics' ? 'active' : ''}`}
+          onClick={() => setCurrentView('analytics')}
         >
-          <span className="app-nav__icon">🎯</span>
-          <span>Interventions</span>
+          <span className="app-nav__icon">📈</span>
+          <span>Insights</span>
         </button>
         <button
           className={`app-nav__button ${currentView === 'plans' ? 'active' : ''}`}
@@ -231,10 +229,17 @@ function App() {
             onDeleteTask={handleDeleteTask}
           />
         )}
-        {currentView === 'energy' && <EnergyTracker onSubmit={handleEnergySave} />}
-        {currentView === 'interventions' && (
-          <InterventionTracker onSubmit={handleInterventionsSave} />
+        {currentView === 'checkin' && (
+          <IntegratedCheckIn
+            onSubmit={handleCheckInSubmit}
+            lastCheckIn={lastCheckIn ? {
+              energyLevel: lastCheckIn.energyLevel,
+              timestamp: lastCheckIn.timestamp,
+              interventions: lastCheckIn.activeInterventions,
+            } : undefined}
+          />
         )}
+        {currentView === 'analytics' && <AnalyticsView />}
         {currentView === 'plans' && (
           <IfThenPlanner onSave={handlePlanSave} existingPlans={plans} />
         )}
