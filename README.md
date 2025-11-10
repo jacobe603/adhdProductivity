@@ -2,6 +2,12 @@
 
 An evidence-based productivity tracking app designed specifically for ADHD brains, built with React, TypeScript, and local-first architecture.
 
+## 🚀 Live Demo
+
+**[Try it now: https://jacobe603.github.io/adhdProductivity/](https://jacobe603.github.io/adhdProductivity/)**
+
+All data is stored locally in your browser - completely private and works offline!
+
 ## Phase 1 Features ✅
 
 ### 1. Energy Tracking & Visualization
