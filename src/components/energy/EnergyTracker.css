@@ -1,0 +1,279 @@
+/* Energy Tracker Component Styles - ADHD-friendly design */
+
+.energy-tracker {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.energy-tracker__header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  text-align: center;
+  margin: 0 0 2rem 0;
+}
+
+/* Large emoji display - immediate visual feedback */
+.energy-tracker__emoji-display {
+  text-align: center;
+  padding: 2rem 0;
+  transition: color 0.2s ease;
+}
+
+.energy-tracker__emoji {
+  font-size: 6rem;
+  line-height: 1;
+  display: block;
+  margin-bottom: 1rem;
+  animation: energyPulse 0.3s ease-out;
+}
+
+@keyframes energyPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.energy-tracker__label {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: inherit;
+}
+
+.energy-tracker__number {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+/* Slider container */
+.energy-tracker__slider-container {
+  margin: 2rem 0;
+  padding: 0 1rem;
+}
+
+/* Custom range slider */
+.energy-tracker__slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+  margin: 1rem 0;
+}
+
+/* Slider thumb - large touch target */
+.energy-tracker__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border: 3px solid #1f2937;
+  transition: transform 0.15s ease;
+}
+
+.energy-tracker__slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.energy-tracker__slider::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+
+.energy-tracker__slider::-moz-range-thumb {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border: 3px solid #1f2937;
+  transition: transform 0.15s ease;
+}
+
+.energy-tracker__slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+.energy-tracker__slider::-moz-range-thumb:active {
+  transform: scale(1.2);
+}
+
+/* Emoji markers along slider */
+.energy-tracker__emoji-markers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.energy-tracker__emoji-marker {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  opacity: 0.4;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.energy-tracker__emoji-marker:hover {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+.energy-tracker__emoji-marker.active {
+  opacity: 1;
+  transform: scale(1.2);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Notes section */
+.energy-tracker__notes-section {
+  margin: 2rem 0;
+  min-height: 3rem;
+}
+
+.energy-tracker__notes-toggle {
+  background: none;
+  border: 2px dashed #d1d5db;
+  color: #6b7280;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.energy-tracker__notes-toggle:hover {
+  border-color: #9ca3af;
+  background: #f9fafb;
+  color: #374151;
+}
+
+.energy-tracker__notes-input {
+  position: relative;
+}
+
+.energy-tracker__textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.2s ease;
+}
+
+.energy-tracker__textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.energy-tracker__textarea::placeholder {
+  color: #9ca3af;
+}
+
+.energy-tracker__notes-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: #f3f4f6;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #6b7280;
+  transition: all 0.2s ease;
+}
+
+.energy-tracker__notes-close:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* Primary CTA - large and prominent */
+.energy-tracker__submit {
+  width: 100%;
+  padding: 1.25rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.energy-tracker__submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.energy-tracker__submit:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.energy-tracker__hint {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .energy-tracker {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .energy-tracker__header h2 {
+    font-size: 1.25rem;
+  }
+
+  .energy-tracker__emoji {
+    font-size: 5rem;
+  }
+
+  .energy-tracker__label {
+    font-size: 1.25rem;
+  }
+
+  .energy-tracker__emoji-marker {
+    font-size: 1.25rem;
+    padding: 0.25rem;
+  }
+}

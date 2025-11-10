@@ -1,0 +1,250 @@
+/* Intervention Tracker Component Styles */
+
+.intervention-tracker {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.intervention-tracker__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.intervention-tracker__header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+}
+
+.intervention-tracker__subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Category sections */
+.intervention-tracker__categories {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.intervention-category {
+  border-top: 2px solid #e5e7eb;
+  padding-top: 1.5rem;
+}
+
+.intervention-category:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.intervention-category__header {
+  margin-bottom: 1rem;
+}
+
+.intervention-category__header h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 0.25rem 0;
+}
+
+.intervention-category__description {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Grid of intervention cards */
+.intervention-category__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+/* Individual intervention card - large touch target */
+.intervention-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0.75rem;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 100px;
+  text-align: center;
+}
+
+.intervention-card:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.intervention-card:active {
+  transform: translateY(0);
+}
+
+/* Active state */
+.intervention-card.active {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+}
+
+.intervention-card.active:hover {
+  background: #bfdbfe;
+  border-color: #2563eb;
+}
+
+.intervention-card__icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.intervention-card__name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.2;
+  display: block;
+}
+
+.intervention-card.active .intervention-card__name {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+/* Checkmark for selected items */
+.intervention-card__check {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 24px;
+  height: 24px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: bold;
+  animation: checkAppear 0.2s ease-out;
+}
+
+@keyframes checkAppear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Summary section */
+.intervention-tracker__summary {
+  margin: 2rem 0 1rem;
+  padding: 1rem;
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.intervention-tracker__summary p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #166534;
+}
+
+.intervention-tracker__summary strong {
+  font-size: 1.25rem;
+  color: #15803d;
+}
+
+/* Submit button */
+.intervention-tracker__submit {
+  width: 100%;
+  padding: 1.25rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  background: #3b82f6;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.intervention-tracker__submit:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.intervention-tracker__submit:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.intervention-tracker__submit:disabled {
+  background: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.intervention-tracker__hint {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .intervention-tracker {
+    padding: 1.5rem;
+  }
+
+  .intervention-category__grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .intervention-card {
+    padding: 1rem 0.5rem;
+    min-height: 90px;
+  }
+
+  .intervention-card__icon {
+    font-size: 2rem;
+  }
+
+  .intervention-card__name {
+    font-size: 0.75rem;
+  }
+}
