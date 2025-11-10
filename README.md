@@ -8,16 +8,18 @@ An evidence-based productivity tracking app designed specifically for ADHD brain
 
 All data is stored locally in your browser - completely private and works offline!
 
-## Phase 1 Features ✅
+## Features
 
-### 1. Energy Tracking & Visualization
+### Phase 1: Core Tracking ✅
+
+#### 1. Energy Tracking & Visualization
 - **Visual emoji slider** (1-10) for tracking energy levels throughout the day
 - Time-of-day categorization (morning, mid-morning, afternoon, late-afternoon, evening)
 - Optional notes for context
 - Immediate visual feedback with color-coded energy states
 - Large touch targets and clear visual hierarchy
 
-### 2. If-Then Implementation Intentions
+#### 2. If-Then Implementation Intentions
 - Research-backed "if-then" planning system that improves ADHD performance to neurotypical levels
 - Pre-built templates for common scenarios:
   - Task initiation
@@ -27,7 +29,7 @@ All data is stored locally in your browser - completely private and works offlin
 - Custom plan creation with category tagging
 - Success tracking for each plan
 
-### 3. Intervention Tracking
+#### 3. Intervention Tracking
 - **Dopamenu system** with 4 categories:
   - 🍿 **Appetizers**: 5-min dopamine boosts (walk, music, stretch)
   - 🍽️ **Entrees**: Sustained engagement (exercise, meditation)
@@ -37,9 +39,42 @@ All data is stored locally in your browser - completely private and works offlin
 - Context tracking (energy before/after intervention)
 - Effectiveness ratings
 
+### Phase 2: Task Management ✅
+
+#### 1. Lightning-Fast Task Capture
+- **< 3 second task entry** - Optimized for ADHD brain
+- Enter key or button to add instantly
+- Auto-focus on input for immediate capture
+- No required fields beyond task title
+
+#### 2. Must-Do vs Want-To System
+- **Must-Do**: 1-3 critical tasks per day (⭐)
+- **Want-To**: Flexible tasks when energy allows (💫)
+- Visual separation to reduce overwhelm
+- Daily progress tracking for each category
+
+#### 3. Completion Celebrations
+- **Dopamine-boosting animations** when tasks complete
+- Random encouraging messages (🎉 "Awesome!", ⚡ "Boom!")
+- Colorful confetti particles
+- Immediate positive reinforcement
+
+#### 4. Task Management Features
+- Large, clear checkboxes (easy to tap/click)
+- Completion timestamps
+- Quick delete with confirmation
+- Collapsible completed section
+- Empty state guidance
+
+#### 5. Daily Progress Dashboard
+- Real-time task completion counts
+- Must-Do vs Want-To progress bars
+- Total tasks completed today
+- Visual progress summary
+
 ## ADHD-Friendly Design Principles
 
-✓ **Minimal cognitive load**: Maximum 3 navigation tabs, single primary CTA per screen
+✓ **Minimal cognitive load**: Simple 4-tab navigation, single primary CTA per screen
 ✓ **Immediate feedback**: Visual animations, color changes, success notifications
 ✓ **Large touch targets**: All interactive elements optimized for easy selection
 ✓ **Clear visual hierarchy**: Generous whitespace, clear typography, high contrast
@@ -139,17 +174,34 @@ src/
 }
 ```
 
-## Next Steps (Phase 2 & 3)
+### Task Data Model
+```typescript
+{
+  title: string,
+  priority: 'must-do' | 'want-to',
+  completed: boolean,
+  createdAt: Date,
+  completedAt?: Date,
+  energyLevelAtCompletion?: 1-10
+}
+```
 
-- [ ] Energy pattern visualization (charts, heatmaps, insights)
-- [ ] Contextual prompt system to surface if-then plans automatically
-- [ ] N-of-1 experiment framework for testing interventions
-- [ ] Time-of-day optimization based on chronotype
+## Next Steps (Phase 3+)
+
+### Analytics & Insights
+- [ ] Energy pattern visualization (charts, heatmaps showing trends)
+- [ ] Weekly pattern analytics and insights
+- [ ] Task completion correlation with energy levels
+- [ ] Intervention effectiveness analytics
+
+### Advanced Features
 - [ ] Impact-Effort Matrix for task prioritization
-- [ ] Distraction capture feature
-- [ ] Modified Pomodoro timer
-- [ ] AI task breakdown (Magic ToDo style)
-- [ ] Weekly pattern analytics
+- [ ] AI task breakdown (Magic ToDo style - break big tasks into steps)
+- [ ] N-of-1 experiment framework for systematic intervention testing
+- [ ] Time-of-day optimization based on chronotype detection
+- [ ] Contextual prompt system (surface if-then plans automatically)
+- [ ] Distraction capture feature (quick notepad)
+- [ ] Modified Pomodoro timer (flexible work blocks)
 
 ## Evidence Base
 

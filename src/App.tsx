@@ -2,18 +2,22 @@ import { useEffect, useState } from 'react';
 import { EnergyTracker } from './components/energy/EnergyTracker';
 import { InterventionTracker } from './components/interventions/InterventionTracker';
 import { IfThenPlanner } from './components/intentions/IfThenPlanner';
+import { TaskManager } from './components/tasks/TaskManager';
+import { CelebrationAnimation } from './components/tasks/CelebrationAnimation';
 import { db } from './db/database';
 import { getTimeOfDay } from './utils/timeUtils';
-import { EnergyLevel, IfThenPlan } from './types';
+import { EnergyLevel, IfThenPlan, Task, TaskPriority } from './types';
 import './App.css';
 
-type View = 'energy' | 'interventions' | 'plans';
+type View = 'tasks' | 'energy' | 'interventions' | 'plans';
 
 function App() {
-  const [currentView, setCurrentView] = useState<View>('energy');
+  const [currentView, setCurrentView] = useState<View>('tasks');
   const [dbReady, setDbReady] = useState(false);
   const [plans, setPlans] = useState<IfThenPlan[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   // Initialize database
   useEffect(() => {
@@ -35,6 +39,22 @@ function App() {
         .catch(console.error);
     }
   }, [dbReady, currentView]);
+
+  // Load tasks
+  useEffect(() => {
+    if (dbReady) {
+      loadTasks();
+    }
+  }, [dbReady]);
+
+  const loadTasks = async () => {
+    try {
+      const todayTasks = await db.getTodayTasks();
+      setTasks(todayTasks);
+    } catch (error) {
+      console.error('Failed to load tasks:', error);
+    }
+  };
 
   const handleEnergySave = async (energyLevel: EnergyLevel, notes?: string) => {
     try {
@@ -96,6 +116,52 @@ function App() {
     setTimeout(() => setShowSuccess(false), 2000);
   };
 
+  // Task handlers
+  const handleAddTask = async (title: string, priority: TaskPriority) => {
+    try {
+      await db.saveTask({
+        title,
+        priority,
+        completed: false,
+        createdAt: new Date(),
+      });
+
+      await loadTasks();
+      showSuccessMessage();
+    } catch (error) {
+      console.error('Failed to add task:', error);
+    }
+  };
+
+  const handleToggleTask = async (id: number) => {
+    try {
+      const task = tasks.find((t) => t.id === id);
+      if (!task) return;
+
+      if (!task.completed) {
+        // Completing task - show celebration!
+        await db.completeTask(id);
+        setShowCelebration(true);
+      } else {
+        // Un-completing task
+        await db.updateTask(id, { completed: false, completedAt: undefined });
+      }
+
+      await loadTasks();
+    } catch (error) {
+      console.error('Failed to toggle task:', error);
+    }
+  };
+
+  const handleDeleteTask = async (id: number) => {
+    try {
+      await db.deleteTask(id);
+      await loadTasks();
+    } catch (error) {
+      console.error('Failed to delete task:', error);
+    }
+  };
+
   if (!dbReady) {
     return (
       <div className="app-loading">
@@ -118,6 +184,13 @@ function App() {
       {/* Navigation */}
       <nav className="app-nav">
         <button
+          className={`app-nav__button ${currentView === 'tasks' ? 'active' : ''}`}
+          onClick={() => setCurrentView('tasks')}
+        >
+          <span className="app-nav__icon">✓</span>
+          <span>Tasks</span>
+        </button>
+        <button
           className={`app-nav__button ${currentView === 'energy' ? 'active' : ''}`}
           onClick={() => setCurrentView('energy')}
         >
@@ -136,7 +209,7 @@ function App() {
           onClick={() => setCurrentView('plans')}
         >
           <span className="app-nav__icon">🔄</span>
-          <span>If-Then Plans</span>
+          <span>Plans</span>
         </button>
       </nav>
 
@@ -150,6 +223,14 @@ function App() {
 
       {/* Main content */}
       <main className="app-main">
+        {currentView === 'tasks' && (
+          <TaskManager
+            tasks={tasks}
+            onAddTask={handleAddTask}
+            onToggleTask={handleToggleTask}
+            onDeleteTask={handleDeleteTask}
+          />
+        )}
         {currentView === 'energy' && <EnergyTracker onSubmit={handleEnergySave} />}
         {currentView === 'interventions' && (
           <InterventionTracker onSubmit={handleInterventionsSave} />
@@ -158,6 +239,12 @@ function App() {
           <IfThenPlanner onSave={handlePlanSave} existingPlans={plans} />
         )}
       </main>
+
+      {/* Celebration Animation */}
+      <CelebrationAnimation
+        show={showCelebration}
+        onComplete={() => setShowCelebration(false)}
+      />
 
       {/* Footer */}
       <footer className="app-footer">

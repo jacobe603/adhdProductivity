@@ -1,0 +1,117 @@
+/* Celebration Animation - Dopamine boost! */
+
+.celebration-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.celebration-content {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+/* Main celebration message */
+.celebration-message {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  color: #10b981;
+  text-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  animation: celebrationPop 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes celebrationPop {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(0.9) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* Confetti particles */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  top: 50%;
+  animation: confettiFall 1.5s ease-out forwards;
+}
+
+.confetti:nth-child(2n) {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.confetti:nth-child(3n) {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.confetti:nth-child(4n) {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.confetti:nth-child(5n) {
+  background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(300px) rotate(var(--rotation, 360deg));
+    opacity: 0;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .celebration-message {
+    font-size: 2rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .celebration-message {
+    animation: celebrationFade 1.5s ease-out;
+  }
+
+  @keyframes celebrationFade {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .confetti {
+    animation: none;
+    display: none;
+  }
+}

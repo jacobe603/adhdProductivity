@@ -125,3 +125,55 @@ export const DEFAULT_IF_THEN_TEMPLATES = [
     category: 'routine' as const,
   },
 ];
+
+// Task Management Types (Phase 2)
+
+export type TaskPriority = 'must-do' | 'want-to';
+export type TaskImpact = 'low' | 'medium' | 'high';
+export type TaskEffort = 'low' | 'medium' | 'high';
+
+export interface Task {
+  id?: number;
+  title: string;
+  description?: string;
+  priority: TaskPriority;
+  completed: boolean;
+  createdAt: Date;
+  completedAt?: Date;
+  dueDate?: Date;
+
+  // Impact-Effort Matrix
+  impact?: TaskImpact;
+  effort?: TaskEffort;
+
+  // Integration with other systems
+  energyLevelAtCompletion?: EnergyLevel;
+  timeOfDayCompleted?: 'morning' | 'mid-morning' | 'afternoon' | 'late-afternoon' | 'evening';
+
+  // Task breakdown
+  subtasks?: SubTask[];
+  parentTaskId?: number;
+
+  // Context
+  tags?: string[];
+  notes?: string;
+}
+
+export interface SubTask {
+  id: string;
+  title: string;
+  completed: boolean;
+  estimatedMinutes?: number;
+}
+
+// Daily summary
+export interface DailyProgress {
+  date: string; // YYYY-MM-DD
+  mustDoCompleted: number;
+  mustDoTotal: number;
+  wantToCompleted: number;
+  wantToTotal: number;
+  totalTasksCompleted: number;
+  averageEnergyLevel?: number;
+  interventionsUsed: string[];
+}
