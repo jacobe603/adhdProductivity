@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADHD Focus - Today</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .date {
+            text-align: center;
+            color: #718096;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .energy-section {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .energy-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .energy-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .energy-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .energy-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .energy-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .energy-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .add-task-section {
+            margin-bottom: 30px;
+        }
+
+        .task-input-wrapper {
+            display: flex;
+            gap: 12px;
+        }
+
+        .task-input {
+            flex: 1;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .task-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .add-btn {
+            padding: 16px 32px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .add-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .add-btn:active {
+            transform: translateY(0);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 4px;
+        }
+
+        .tasks-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+        }
+
+        .tasks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: #f7fafc;
+            border-radius: 12px;
+            transition: all 0.2s;
+            gap: 12px;
+        }
+
+        .task-item:hover {
+            background: #edf2f7;
+        }
+
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #cbd5e0;
+            border-radius: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .task-checkbox:hover {
+            border-color: #667eea;
+        }
+
+        .task-checkbox.completed {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .task-checkbox svg {
+            width: 16px;
+            height: 16px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .task-checkbox.completed svg {
+            opacity: 1;
+        }
+
+        .task-text {
+            flex: 1;
+            font-size: 16px;
+            color: #2d3748;
+            transition: all 0.2s;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #a0aec0;
+        }
+
+        .task-time {
+            font-size: 12px;
+            color: #a0aec0;
+            flex-shrink: 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #a0aec0;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-text {
+            font-size: 16px;
+        }
+
+        /* Celebration Animation */
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .celebration.show {
+            opacity: 1;
+            animation: celebrationPop 0.5s ease-out;
+        }
+
+        @keyframes celebrationPop {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .celebration-emoji {
+            font-size: 64px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .celebration-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+            text-align: center;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #667eea;
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hidden-tasks-notice {
+            text-align: center;
+            padding: 16px;
+            color: #718096;
+            font-size: 14px;
+            margin-top: 16px;
+        }
+
+        .show-all-btn {
+            background: none;
+            border: none;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .show-all-btn:hover {
+            color: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Today</h1>
+        <div class="date" id="currentDate"></div>
+
+        <div class="energy-section">
+            <div class="energy-label">
+                <span>How's your energy right now?</span>
+                <span class="energy-value" id="energyValue">5</span>
+            </div>
+            <input type="range" min="1" max="10" value="5" class="energy-slider" id="energySlider">
+        </div>
+
+        <div class="add-task-section">
+            <div class="task-input-wrapper">
+                <input
+                    type="text"
+                    class="task-input"
+                    id="taskInput"
+                    placeholder="What needs to happen today?"
+                    autocomplete="off"
+                >
+                <button class="add-btn" id="addBtn">Add</button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="completedCount">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="remainingCount">0</div>
+                <div class="stat-label">Remaining</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="totalCount">0</div>
+                <div class="stat-label">Total Today</div>
+            </div>
+        </div>
+
+        <div class="tasks-header">Your Focus Tasks (Top 5)</div>
+        <div class="tasks-list" id="tasksList"></div>
+        <div class="hidden-tasks-notice" id="hiddenNotice" style="display: none;"></div>
+    </div>
+
+    <div class="celebration" id="celebration">
+        <div class="celebration-emoji">🎉</div>
+        <div class="celebration-text" id="celebrationText">Amazing work!</div>
+    </div>
+
+    <script>
+        // IndexedDB Setup
+        let db;
+        const DB_NAME = 'adhdFocusDB';
+        const DB_VERSION = 1;
+
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+
+                    // Tasks store
+                    if (!db.objectStoreNames.contains('tasks')) {
+                        const taskStore = db.createObjectStore('tasks', { keyPath: 'id', autoIncrement: true });
+                        taskStore.createIndex('date', 'date', { unique: false });
+                        taskStore.createIndex('completed', 'completed', { unique: false });
+                    }
+
+                    // Energy tracking store
+                    if (!db.objectStoreNames.contains('energy')) {
+                        const energyStore = db.createObjectStore('energy', { keyPath: 'id', autoIncrement: true });
+                        energyStore.createIndex('timestamp', 'timestamp', { unique: false });
+                    }
+                };
+            });
+        }
+
+        // Task Functions
+        async function addTask(taskName) {
+            const transaction = db.transaction(['tasks'], 'readwrite');
+            const store = transaction.objectStore('tasks');
+
+            const task = {
+                name: taskName,
+                completed: false,
+                date: new Date().toISOString().split('T')[0],
+                timestamp: new Date().toISOString(),
+                timeOfDay: getTimeOfDay(),
+                energyLevel: parseInt(document.getElementById('energySlider').value)
+            };
+
+            return new Promise((resolve, reject) => {
+                const request = store.add(task);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function getTodayTasks() {
+            const today = new Date().toISOString().split('T')[0];
+            const transaction = db.transaction(['tasks'], 'readonly');
+            const store = transaction.objectStore('tasks');
+            const index = store.index('date');
+
+            return new Promise((resolve, reject) => {
+                const request = index.getAll(today);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function toggleTaskCompletion(taskId, completed) {
+            const transaction = db.transaction(['tasks'], 'readwrite');
+            const store = transaction.objectStore('tasks');
+
+            return new Promise((resolve, reject) => {
+                const getRequest = store.get(taskId);
+
+                getRequest.onsuccess = () => {
+                    const task = getRequest.result;
+                    task.completed = completed;
+                    task.completedAt = completed ? new Date().toISOString() : null;
+
+                    const updateRequest = store.put(task);
+                    updateRequest.onsuccess = () => resolve();
+                    updateRequest.onerror = () => reject(updateRequest.error);
+                };
+
+                getRequest.onerror = () => reject(getRequest.error);
+            });
+        }
+
+        async function trackEnergy(energyLevel) {
+            const transaction = db.transaction(['energy'], 'readwrite');
+            const store = transaction.objectStore('energy');
+
+            const entry = {
+                energyLevel: energyLevel,
+                timestamp: new Date().toISOString(),
+                timeOfDay: getTimeOfDay(),
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            return new Promise((resolve, reject) => {
+                const request = store.add(entry);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        function getTimeOfDay() {
+            const hour = new Date().getHours();
+            if (hour < 12) return 'morning';
+            if (hour < 17) return 'afternoon';
+            return 'evening';
+        }
+
+        // UI Functions
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        }
+
+        async function renderTasks() {
+            const tasks = await getTodayTasks();
+            const tasksList = document.getElementById('tasksList');
+            const hiddenNotice = document.getElementById('hiddenNotice');
+
+            // Update stats
+            const completed = tasks.filter(t => t.completed).length;
+            const total = tasks.length;
+            const remaining = total - completed;
+
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('remainingCount').textContent = remaining;
+            document.getElementById('totalCount').textContent = total;
+
+            // Render tasks (max 5 visible)
+            tasksList.innerHTML = '';
+
+            if (tasks.length === 0) {
+                tasksList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">✨</div>
+                        <div class="empty-state-text">Add your first task above to get started!</div>
+                    </div>
+                `;
+                hiddenNotice.style.display = 'none';
+                return;
+            }
+
+            const visibleTasks = tasks.slice(0, 5);
+            const hiddenCount = tasks.length - visibleTasks.length;
+
+            visibleTasks.forEach(task => {
+                const taskItem = document.createElement('div');
+                taskItem.className = 'task-item' + (task.completed ? ' completed' : '');
+                taskItem.innerHTML = `
+                    <div class="task-checkbox ${task.completed ? 'completed' : ''}" data-id="${task.id}">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="task-text">${task.name}</div>
+                    <div class="task-time">${formatTime(task.timestamp)}</div>
+                `;
+                tasksList.appendChild(taskItem);
+
+                // Add click handler
+                const checkbox = taskItem.querySelector('.task-checkbox');
+                checkbox.addEventListener('click', async () => {
+                    const newCompleted = !task.completed;
+                    await toggleTaskCompletion(task.id, newCompleted);
+
+                    if (newCompleted) {
+                        showCelebration();
+                        createConfetti();
+                    }
+
+                    renderTasks();
+                });
+            });
+
+            // Show hidden tasks notice
+            if (hiddenCount > 0) {
+                hiddenNotice.style.display = 'block';
+                hiddenNotice.textContent = `${hiddenCount} more task${hiddenCount > 1 ? 's' : ''} hidden to keep you focused`;
+            } else {
+                hiddenNotice.style.display = 'none';
+            }
+        }
+
+        function showCelebration() {
+            const celebration = document.getElementById('celebration');
+            const celebrationText = document.getElementById('celebrationText');
+
+            const messages = [
+                'Amazing work!',
+                'You did it!',
+                'Fantastic!',
+                'Keep going!',
+                'Yes! ✨',
+                'Awesome!',
+                'Victory!'
+            ];
+
+            celebrationText.textContent = messages[Math.floor(Math.random() * messages.length)];
+            celebration.classList.add('show');
+
+            setTimeout(() => {
+                celebration.classList.remove('show');
+            }, 1500);
+        }
+
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#43e97b'];
+            const confettiCount = 30;
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `confetti-fall ${2 + Math.random() * 2}s linear`;
+
+                document.body.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('energySlider').addEventListener('input', (e) => {
+            const value = e.target.value;
+            document.getElementById('energyValue').textContent = value;
+        });
+
+        document.getElementById('energySlider').addEventListener('change', async (e) => {
+            const value = parseInt(e.target.value);
+            await trackEnergy(value);
+        });
+
+        document.getElementById('addBtn').addEventListener('click', async () => {
+            const input = document.getElementById('taskInput');
+            const taskName = input.value.trim();
+
+            if (taskName) {
+                await addTask(taskName);
+                input.value = '';
+                input.focus();
+                await renderTasks();
+            }
+        });
+
+        document.getElementById('taskInput').addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('addBtn').click();
+            }
+        });
+
+        // Initialize
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Start the app
+        initDB().then(() => {
+            renderTasks();
+            document.getElementById('taskInput').focus();
+        });
+    </script>
+</body>
+</html>
